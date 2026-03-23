@@ -327,7 +327,7 @@ export default function JITAIOverlay({ isOpen, profile, onKeep, onSell }) {
               boxShadow: canSell ? '0 4px 15px rgba(255,107,107,0.3)' : 'none',
             }}
           >
-            {canSell ? '📉 Vendre' : `⏳ Patientez... ${countdown}s`}
+            {canSell ? '📉 Vendre quand même' : `⏳ Patientez... ${countdown}s`}
           </button>
         </div>
       </div>

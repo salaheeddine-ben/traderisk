@@ -17,7 +17,7 @@ function djb2Hash(str) {
 export function assignGroup(participantID) {
   if (!participantID) participantID = 'P001'
 
-  const storageKey = `na_group_${participantID}`
+  const storageKey = `group_${participantID}`
   const stored = localStorage.getItem(storageKey)
   if (stored === 'A' || stored === 'B') return stored
 
