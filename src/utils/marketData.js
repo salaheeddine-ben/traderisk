@@ -31,10 +31,10 @@ export function getMarketTimeline() {
   const prices = new Array(301)
   prices[0] = 100.0
 
-  // Phase 1 — Slow climb +2%
+  // Phase 1 — Slow climb +2% (low volatility but visible oscillations)
   for (let t = 1; t <= 180; t++) {
     const base = 100 * (1 + 0.02 * (t / 180))
-    const noise = (rand() - 0.5) * 0.22
+    const noise = (rand() - 0.5) * 0.5
     prices[t] = parseFloat((base + noise).toFixed(3))
   }
 

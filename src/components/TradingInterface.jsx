@@ -452,6 +452,15 @@ export default function TradingInterface({ participantData, onEnd }) {
   const phaseLabel =
     phase === 'crash' ? '⚡ KRACH' : phase === 'recovery' ? '↗ Rebond' : '◉ Stable'
 
+  // ── Dynamic Y-axis bounds (zooms in on Phase 1, expands on crash)
+  const visiblePrices = timeline.slice(0, tick + 1)
+  const minVisible = Math.min(...visiblePrices)
+  const maxVisible = Math.max(...visiblePrices)
+  const priceRange = maxVisible - minVisible
+  const yPad = Math.max(priceRange * 0.28, 1.5)
+  const chartYMin = parseFloat((minVisible - yPad).toFixed(1))
+  const chartYMax = parseFloat((maxVisible + yPad).toFixed(1))
+
   // ── Chart data
   const chartLabels = Array.from({ length: tick + 1 }, (_, i) =>
     i % 60 === 0 ? `${Math.floor(i / 60)}m` : ''
@@ -517,8 +526,8 @@ export default function TradingInterface({ participantData, onEnd }) {
           font: { size: 10 },
           callback: (v) => `${v.toFixed(0)}€`,
         },
-        min: 80,
-        max: 115,
+        min: chartYMin,
+        max: chartYMax,
       },
     },
   }
