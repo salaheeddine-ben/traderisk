@@ -98,7 +98,13 @@ export default function Onboarding({ participantID, onComplete }) {
   return (
     <div className="onboarding-container">
       {/* Neural background decoration */}
-      <div className="neural-bg" aria-hidden="true" />
+      <div className="neural-bg" aria-hidden="true">
+        <div className="neural-orb orb-1" />
+        <div className="neural-orb orb-2" />
+        <div className="neural-orb orb-3" />
+        <div className="neural-orb orb-4" />
+        <div className="neural-orb orb-5" />
+      </div>
 
       {/* Logo */}
       <div className="onboarding-logo">

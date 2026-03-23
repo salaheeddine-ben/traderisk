@@ -1009,3 +1009,220 @@ body {
   max-width: 520px;
   padding: 0 12px;
 }
+
+/* ════════════════════════════════════════════════════════════════
+   DESIGN ENHANCEMENTS v2
+   ════════════════════════════════════════════════════════════════ */
+
+/* ─── New keyframes ───────────────────────────────────────────── */
+
+@keyframes sellShake {
+  0%, 80%, 100% { transform: translateX(0) scale(1); }
+  83%  { transform: translateX(-4px) scale(1.01); }
+  86%  { transform: translateX(4px) scale(1.01); }
+  89%  { transform: translateX(-3px); }
+  92%  { transform: translateX(3px); }
+  95%  { transform: translateX(-1px); }
+  98%  { transform: translateX(1px); }
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes perfGlowPos {
+  0%, 100% { text-shadow: 0 0 20px rgba(0,201,167,0.35); }
+  50%       { text-shadow: 0 0 55px rgba(0,201,167,0.7), 0 0 80px rgba(0,201,167,0.3); }
+}
+
+@keyframes perfGlowNeg {
+  0%, 100% { text-shadow: 0 0 16px rgba(255,107,107,0.3); }
+  50%       { text-shadow: 0 0 40px rgba(255,107,107,0.55); }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.45; }
+  33%       { transform: translate(15px, -20px) scale(1.05); opacity: 0.6; }
+  66%       { transform: translate(-10px, 10px) scale(0.95); opacity: 0.35; }
+}
+
+@keyframes liveDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* ─── Phase ambient atmosphere ───────────────────────────────── */
+.phase-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.phase-ambient.on { opacity: 1; }
+
+.crash-ambient {
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 60, 60, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 15% 60%, rgba(255, 80, 80, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 85% 70%, rgba(200, 30, 30, 0.05) 0%, transparent 50%);
+}
+
+.recovery-ambient {
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 110%, rgba(255, 165, 0, 0.07) 0%, transparent 55%);
+}
+
+/* ─── LIVE indicator ─────────────────────────────────────────── */
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--accent-red);
+}
+
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  animation: liveDot 1.2s ease-in-out infinite;
+}
+
+/* ─── News ticker ────────────────────────────────────────────── */
+.news-ticker {
+  display: flex;
+  align-items: center;
+  height: 0;
+  overflow: hidden;
+  background: rgba(255, 60, 60, 0.08);
+  border-bottom: 1px solid rgba(255, 107, 107, 0.25);
+  flex-shrink: 0;
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 10;
+}
+.news-ticker.ticker-on { height: 30px; }
+
+.ticker-label {
+  flex-shrink: 0;
+  padding: 0 14px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--accent-red);
+  letter-spacing: 0.5px;
+  border-right: 1px solid rgba(255, 107, 107, 0.3);
+  white-space: nowrap;
+  background: rgba(255, 60, 60, 0.1);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-track {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-text {
+  display: inline-block;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  padding-left: 24px;
+  animation: tickerScroll 52s linear infinite;
+  white-space: nowrap;
+}
+
+/* ─── Chart container — phase-aware border ───────────────────── */
+.chart-container {
+  transition: border-color 0.8s ease, box-shadow 0.8s ease;
+}
+.chart-crash {
+  border-color: rgba(255, 80, 80, 0.4) !important;
+  box-shadow: 0 0 30px rgba(255, 60, 60, 0.1), inset 0 0 20px rgba(255, 60, 60, 0.04);
+}
+.chart-recovery {
+  border-color: rgba(255, 165, 0, 0.35) !important;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.08);
+}
+
+/* ─── Sell button — nervous shake during crash ───────────────── */
+.btn-sell-crisis {
+  animation: sellShake 1.8s ease-in-out infinite, glowPulse 1.2s ease infinite !important;
+  background: linear-gradient(135deg, #ff2424, #ff5252) !important;
+  box-shadow: 0 0 35px rgba(255, 50, 50, 0.55) !important;
+}
+
+/* ─── ETF category colored left borders ──────────────────────── */
+.etf-category {
+  position: relative;
+  padding-left: 10px;
+  border-left: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+.etf-category[data-cat="actions"]    { border-left-color: rgba(91,141,239,0.6); }
+.etf-category[data-cat="obligations"]{ border-left-color: rgba(0,201,167,0.6); }
+.etf-category[data-cat="crypto"]     { border-left-color: rgba(255,215,0,0.6); }
+.etf-category[data-cat="immobilier"] { border-left-color: rgba(255,165,0,0.6); }
+
+/* ─── Neural orbs — Onboarding ───────────────────────────────── */
+.neural-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+}
+.orb-1 {
+  width: 320px; height: 320px;
+  top: 5%; left: 3%;
+  background: radial-gradient(circle, rgba(91,141,239,0.35) 0%, transparent 70%);
+  animation: orbFloat 11s ease-in-out infinite;
+}
+.orb-2 {
+  width: 240px; height: 240px;
+  top: 55%; right: 6%;
+  background: radial-gradient(circle, rgba(0,201,167,0.28) 0%, transparent 70%);
+  animation: orbFloat 14s ease-in-out infinite 3s;
+}
+.orb-3 {
+  width: 160px; height: 160px;
+  top: 25%; right: 25%;
+  background: radial-gradient(circle, rgba(91,141,239,0.22) 0%, transparent 70%);
+  animation: orbFloat 8s ease-in-out infinite 1.5s;
+}
+.orb-4 {
+  width: 100px; height: 100px;
+  bottom: 15%; left: 18%;
+  background: radial-gradient(circle, rgba(0,201,167,0.25) 0%, transparent 70%);
+  animation: orbFloat 10s ease-in-out infinite 5s;
+}
+.orb-5 {
+  width: 200px; height: 200px;
+  top: 2%; right: 3%;
+  background: radial-gradient(circle, rgba(91,141,239,0.2) 0%, transparent 70%);
+  animation: orbFloat 13s ease-in-out infinite 2s;
+}
+
+/* ─── End screen performance glow ───────────────────────────── */
+.perf-positive {
+  box-shadow: 0 0 60px rgba(0,201,167,0.15), var(--shadow-card);
+  border-color: rgba(0,201,167,0.18) !important;
+}
+.perf-negative {
+  box-shadow: 0 0 40px rgba(255,107,107,0.1), var(--shadow-card);
+  border-color: rgba(255,107,107,0.15) !important;
+}
+
+.perf-glow-positive { animation: perfGlowPos 2.5s ease-in-out infinite; }
+.perf-glow-negative { animation: perfGlowNeg 3s ease-in-out infinite; }

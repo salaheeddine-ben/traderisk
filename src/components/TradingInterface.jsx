@@ -524,7 +524,11 @@ export default function TradingInterface({ participantData, onEnd }) {
   }
 
   return (
-    <div className="trading-root">
+    <div className="trading-root" data-phase={phase}>
+      {/* Phase ambient overlays */}
+      <div className={`phase-ambient crash-ambient ${phase === 'crash' ? 'on' : ''}`} />
+      <div className={`phase-ambient recovery-ambient ${phase === 'recovery' ? 'on' : ''}`} />
+
       {/* ── Header ──────────────────────────────────────────── */}
       <header className="trading-header">
         <div className="header-left">
@@ -542,6 +546,10 @@ export default function TradingInterface({ participantData, onEnd }) {
         </div>
 
         <div className="header-center">
+          <div className="live-indicator">
+            <span className="live-dot" />
+            LIVE
+          </div>
           <div
             className="phase-badge"
             style={{ '--phase-color': phaseColor, color: phaseColor, borderColor: phaseColor }}
@@ -563,6 +571,25 @@ export default function TradingInterface({ participantData, onEnd }) {
           </div>
         </div>
       </header>
+
+      {/* ── News ticker (crash only) ─────────────────────────── */}
+      <div className={`news-ticker ${phase === 'crash' ? 'ticker-on' : ''}`}>
+        <span className="ticker-label">🔴 FLASH</span>
+        <div className="ticker-track">
+          <span className="ticker-text">
+            ⚡ MARCHÉS — Vente massive sur les indices européens, recul brutal en séance&nbsp;&nbsp;•&nbsp;&nbsp;
+            📉 ETF TECH — Rachats record, 4,2 milliards sortis en moins d'une heure&nbsp;&nbsp;•&nbsp;&nbsp;
+            🏦 BCE — Réunion d'urgence convoquée, décision attendue&nbsp;&nbsp;•&nbsp;&nbsp;
+            ⚠️ VOLATILITÉ — VIX bondit à 42, signal de panique extrême&nbsp;&nbsp;•&nbsp;&nbsp;
+            🌍 ASIE — Nikkei plonge de 11%, marchés de Shanghai suspendus&nbsp;&nbsp;•&nbsp;&nbsp;
+            📊 ANALYSE — Les gérants conseillent de ne pas paniquer et de rester positionnés&nbsp;&nbsp;•&nbsp;&nbsp;
+            ⚡ MARCHÉS — Vente massive sur les indices européens, recul brutal en séance&nbsp;&nbsp;•&nbsp;&nbsp;
+            📉 ETF TECH — Rachats record, 4,2 milliards sortis en moins d'une heure&nbsp;&nbsp;•&nbsp;&nbsp;
+            🏦 BCE — Réunion d'urgence convoquée, décision attendue&nbsp;&nbsp;•&nbsp;&nbsp;
+            ⚠️ VOLATILITÉ — VIX bondit à 42, signal de panique extrême
+          </span>
+        </div>
+      </div>
 
       {/* ── Main layout ─────────────────────────────────────── */}
       <main className="trading-main">
@@ -589,7 +616,7 @@ export default function TradingInterface({ participantData, onEnd }) {
           </div>
 
           {/* Chart */}
-          <div className="chart-container">
+          <div className={`chart-container chart-${phase}`}>
             <Line data={chartData} options={chartOptions} />
           </div>
 
@@ -660,7 +687,7 @@ export default function TradingInterface({ participantData, onEnd }) {
               {Object.keys(CAT_COLORS).map((cat) => {
                 const items = ETF_COMPONENTS.filter((c) => c.cat === cat)
                 return (
-                  <div key={cat} className="etf-category">
+                  <div key={cat} className="etf-category" data-cat={cat}>
                     <div
                       className="etf-cat-header"
                       style={{ color: CAT_COLORS[cat] }}

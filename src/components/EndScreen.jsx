@@ -88,9 +88,9 @@ export default function EndScreen({ participantData, tradingData }) {
         </div>
 
         {/* Big performance number */}
-        <div className="end-perf-block">
+        <div className={`end-perf-block ${isPositive ? 'perf-positive' : 'perf-negative'}`}>
           <div
-            className="end-perf-value"
+            className={`end-perf-value ${isPositive ? 'perf-glow-positive' : 'perf-glow-negative'}`}
             style={{ color: perfColor }}
           >
             {isPositive ? '+' : '-'}{animVal}€
